@@ -43,6 +43,20 @@ WHERE `phone` IS NULL
 
 --Query con GROUP BY
 --1. Contare quanti iscritti ci sono stati ogni anno
+SELECT YEAR(`enrolment_date`) as year, COUNT(*) AS `enrollment_for_year`
+FROM `students` 
+GROUP BY year
 --2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+SELECT `office_address` , COUNT(*) as `num_teacher_office_address`
+FROM `teachers`
+GROUP BY `office_address`
+
 --3. Calcolare la media dei voti di ogni appello d'esame
+SELECT `exam_id` , (SUM(`vote`) / COUNT(*)) AS `average_vote`
+FROM `exam_student`
+GROUP BY `exam_id`
+
 --4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+SELECT `department_id` , COUNT(*) AS `course_for_departments`
+FROM `degrees`
+GROUP BY `department_id`
