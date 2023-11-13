@@ -20,6 +20,13 @@ SELECT *
 FROM `students` 
 WHERE CURRENT_DATE - INTERVAL 30 YEAR > `date_of_birth`
 
+--3.2
+SELECT *
+FROM `students` 
+WHERE DATEDIFF(CURRENT_DATE,`date_of_birth`) > 30 * 365  
+
+--3.3
+
 --4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di laurea (286)
 SELECT * 
 FROM `courses` 
@@ -61,7 +68,23 @@ SELECT `exam_id` , (SUM(`vote`) / COUNT(*)) AS `average_vote`
 FROM `exam_student`
 GROUP BY `exam_id`
 
+--3.1
+SELECT courses.name , exam_student.exam_id ,(SUM(`vote`) / COUNT(*)) AS `average_vote`
+FROM `exam_student`
+LEFT JOIN `exams`
+ON exam_student.exam_id = exams.id
+LEFT JOIN `courses`
+ON exams.course_id = courses.id
+GROUP BY exam_student.exam_id
+
 --4. Contare quanti corsi di laurea ci sono per ogni dipartimento
 SELECT `department_id` , COUNT(*) AS `course_for_departments`
 FROM `degrees`
+GROUP BY `department_id`
+
+--4.1
+SELECT departments.name, `department_id` , COUNT(*) AS `course_for_departments`
+FROM `degrees`
+LEFT JOIN `departments`
+ON degrees.department_id = departments.id
 GROUP BY `department_id`
