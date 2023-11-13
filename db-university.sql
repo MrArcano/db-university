@@ -26,6 +26,9 @@ FROM `students`
 WHERE DATEDIFF(CURRENT_DATE,`date_of_birth`) > 30 * 365  
 
 --3.3
+SELECT *, TIMESTAMPDIFF(YEAR,`date_of_birth`,CURRENT_DATE) AS age
+FROM `students`
+HAVING age > 30
 
 --4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di laurea (286)
 SELECT * 
@@ -58,6 +61,7 @@ WHERE `phone` IS NULL
 SELECT YEAR(`enrolment_date`) as year, COUNT(*) AS `enrollment_for_year`
 FROM `students` 
 GROUP BY year
+
 --2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
 SELECT `office_address` , COUNT(*) as `num_teacher_office_address`
 FROM `teachers`
